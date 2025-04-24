@@ -6,8 +6,9 @@ const wifi = require("wifi");
 const storage = require("storage");
 const dialog = require("dialog");
 
-const serverUrl = "";
+const serverUrl = "https://bat-five.vercel.app/";
 
+// ui functions
 function clear() {
   display.fill(display.color(0, 0, 0));
 }
@@ -22,6 +23,31 @@ function splash() {
 }
 
 
+// core functions
+function startup() {
+  // check if ".bat" folder exists
+  var files = storage.readdir("/");
+  if (files.indexOf(".bat") == -1) {
+    storage.mkdir(".bat");
+  }
+}
+
+function installMenu() {
+  clear();
+  const installMenuOptions = ["Search", "Browse", "Back"];
+  var selected = dialog.choice(installMenuOptions);
+  if (selected == "Search") {
+    clear();
+    dialog.message("Not yet implemented", true);
+  }
+  if (selected == "Browse") {
+    clear();
+    dialog.message("Not yet implemented", true);
+  }
+}
+
+
+
 
 clear();
 
@@ -29,14 +55,14 @@ clear();
 
 
 
-storage.mkdir(".bat");
+startup();
 
 if (!wifi.connected()) {
   wifi.connectDialog();
 }
 
 
-const menuOptions = ["Manage", "Install", "Infos", "Cancel"];
+const menuOptions = ["Manage", "Install", "Remove", "Infos", "Cancel"];
 var selected = dialog.choice(menuOptions);
 
 while (selected != "Cancel") {
@@ -47,13 +73,17 @@ while (selected != "Cancel") {
   }
 
   if (selected == "Install") {
+    installMenu();
+  }
+
+  if (selected == "Remove") {
     clear();
     dialog.message("Not yet implemented", true);
   }
 
    if (selected == "Infos") {
     clear();
-    dialog.message("BAT\nBruce Application Toolkit - A packet manager for Bruce firmware\n\ncredit: azachia", true);
+    dialog.message("BAT\nBruce Application Toolkit - A packet manager for Bruce firmware", true);
   }
 
   var selected = dialog.choice(menuOptions);
