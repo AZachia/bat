@@ -1,4 +1,4 @@
-# BAT Bruce Application Toolkit
+# BAT - Bruce Application Toolkit
 A js packet manager for bruce firmware, for js scripts and themes
 
 ![](.github/image.png)

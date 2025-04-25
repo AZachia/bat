@@ -1,0 +1,6 @@
+{
+    "name": "bat",
+    "version": "0.2",
+    "description": "source of Bat packet manager for Bruce",
+    "source": "bat.js"
+}

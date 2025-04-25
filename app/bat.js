@@ -6,6 +6,7 @@ const wifi = require("wifi");
 const storage = require("storage");
 const dialog = require("dialog");
 
+const version = 0.1;
 const serverUrl = "https://bat-five.vercel.app/";
 
 // ui functions
@@ -24,12 +25,44 @@ function splash() {
 
 
 // core functions
+function checkUpdate() {
+  var response = wifi.httpFetch(serverUrl + "pkg/bat", { method: "GET" });
+  if (response.ok) {
+    var data = JSON.parse(response.body);
+    if (data.version > version) {
+      dialog.message("A new version is available: " + data.version, true);
+      return true;
+    } else {
+      dialog.message("You are using the latest version: " + version, true);
+      return false;
+    }
+  }
+}
+
 function startup() {
   // check if ".bat" folder exists
   var files = storage.readdir("/");
   if (files.indexOf(".bat") == -1) {
     storage.mkdir(".bat");
   }
+
+  checkUpdate();
+
+}
+
+function appsMenu() {
+  clear();
+  var apps = storage.readdir("/.bat");
+  if (apps.length == 0) {
+    dialog.message("No apps installed", true);
+    return;
+  }
+  var appNames = [];
+}
+
+function searchPackages() {
+  packageName = dialog.prompt("", 30, "");
+  return
 }
 
 function installMenu() {
@@ -38,7 +71,7 @@ function installMenu() {
   var selected = dialog.choice(installMenuOptions);
   if (selected == "Search") {
     clear();
-    dialog.message("Not yet implemented", true);
+    searchPackages();
   }
   if (selected == "Browse") {
     clear();
@@ -62,10 +95,14 @@ if (!wifi.connected()) {
 }
 
 
-const menuOptions = ["Manage", "Install", "Remove", "Infos", "Cancel"];
+const menuOptions = ["Apps", "Manage", "Install", "Remove", "Infos", "Cancel"];
 var selected = dialog.choice(menuOptions);
 
 while (selected != "Cancel") {
+
+  if (selected == "Apps") {
+    appsMenu();
+  }
 
   if (selected == "Manage") {
     clear();
