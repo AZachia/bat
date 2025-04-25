@@ -47,5 +47,7 @@ apiRouter.get('/pkg/:packageName', (req, res) => {
 app.use('/api', apiRouter);
 
 app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+    console.log(`Server is running`);
 });
+
+module.exports = app
