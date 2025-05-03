@@ -7,7 +7,7 @@ const storage = require("storage");
 const dialog = require("dialog");
 
 const version = 0.1;
-const serverUrl = "https://bat-five.vercel.app/";
+const gitUrl = "https://raw.githubusercontent.com/AZachia/bat/refs/heads/main/packages/";
 
 // ui functions
 function clear() {
@@ -26,7 +26,7 @@ function splash() {
 
 // core functions
 function checkUpdate() {
-  var response = wifi.httpFetch(serverUrl + "pkg/bat", { method: "GET" });
+  var response = wifi.httpFetch(gitUrl + "bat/pkg.json", { method: "GET" });
   if (response.ok) {
     var data = JSON.parse(response.body);
     if (data.version > version) {
